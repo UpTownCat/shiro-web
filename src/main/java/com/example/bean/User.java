@@ -42,7 +42,6 @@ public class User {
 
 	public User(String username, String password, List<String> roles,
 			List<String> permissions) {
-		super();
 		this.username = username;
 		this.password = password;
 		this.roles = roles;
@@ -50,7 +49,13 @@ public class User {
 	}
 
 	public User() {
-		super();
 	}
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"password='" + password + '\'' +
+				", username='" + username + '\'' +
+				'}';
+	}
 }
