@@ -6,6 +6,8 @@
 </head>
 <body>
     user_detail
-    <a href="/user/list">show all users</a>
+    <@isAdmin >
+        <a href="/user/list">show all users</a>
+    </@isAdmin>
 </body>
 </html>
