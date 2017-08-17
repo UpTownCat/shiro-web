@@ -72,7 +72,7 @@ class MessageReciever {
         factory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
         connection = factory.createConnection();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        destination = session.createQueue(from);
+        destination = session.createQueue("destination");
         MessageConsumer consumer = session.createConsumer(destination);
         Message message = consumer.receive();
         if(message instanceof TextMessage) {
