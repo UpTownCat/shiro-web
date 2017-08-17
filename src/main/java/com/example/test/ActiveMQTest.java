@@ -23,6 +23,14 @@ public class ActiveMQTest {
         reciever.recieveMessage("destination");
     }
 
+    @Test
+    public void psTest() throws JMSException {
+        Publish publish = new Publish();
+        Subscribe subscribe = new Subscribe();
+        publish.sendMessage("hello, activemq");
+//        subscribe.subscribeMessage();
+    }
+
 }
 
 /**
@@ -84,4 +92,52 @@ class MessageReciever {
         connection.close();
     }
 
+}
+
+class Publish {
+    private  ConnectionFactory factory = null;
+    private Connection connection = null;
+    private Session session = null;
+    private Destination destination = null;
+
+    /**
+     * 发送消息
+     * @param message
+     * @throws JMSException
+     */
+    public void sendMessage(String message) throws JMSException {
+        factory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
+        connection = factory.createConnection();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        destination = session.createQueue("destination");
+        Topic topic = session.createTopic("topic");
+        MessageProducer producer = session.createProducer(topic);
+        producer.send(session.createTextMessage("the pushMessage"));
+        session.close();
+        connection.close();
+    }
+}
+
+class Subscribe {
+    private  ConnectionFactory factory = null;
+    private Connection connection = null;
+    private Session session = null;
+    private Destination destination = null;
+
+    /**
+     * 接收消息
+     * @param
+     * @throws JMSException
+     */
+    public void subscribeMessage() throws JMSException {
+        factory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
+        connection = factory.createConnection();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        destination = session.createQueue("destination");
+        MessageConsumer consumer = session.createConsumer(session.createTopic("topic"));
+        Message message = consumer.receive();
+        System.out.println(((TextMessage)message).getText());
+        session.close();
+        connection.close();
+    }
 }
