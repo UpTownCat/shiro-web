@@ -24,6 +24,7 @@ public class UserService {
 	}
 	
 	public static User getUser(String username) {
+		System.out.println("获取" + username + " 的用户！");
 		return repository.get(username);
 	}
 

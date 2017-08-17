@@ -1,2 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <diskStore path="H:/temp/"/>
+    <defaultCache
+            maxElementsInMemory="0"
+            eternal="false"
+            timeToLiveSeconds="5"
+            overflowToDisk="true"
+            diskSpoolBufferSizeMB="30"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"/>
+    <!--<cache name="shiro-activeSessionCache"-->
+           <!--maxElementsInMemory="10000"-->
+           <!--overflowToDisk="true"-->
+           <!--eternal="false"-->
+           <!--timeToLiveSeconds="1800"-->
+           <!--diskPersistent="true"-->
+           <!--diskExpiryThreadIntervalSeconds="600"/>-->
 
+    <!--<cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"-->
+           <!--maxElementsInMemory="1000"-->
+           <!--eternal="true"-->
+           <!--overflowToDisk="true"/>-->
+
+    <!--&lt;!&ndash; 登录记录缓存 &ndash;&gt;-->
+    <!--<cache name="passwordRetryCache"-->
+           <!--maxEntriesLocalHeap="2000"-->
+           <!--eternal="false"-->
+           <!--timeToIdleSeconds="3600"-->
+           <!--timeToLiveSeconds="0"-->
+           <!--overflowToDisk="false"-->
+           <!--statistics="true">-->
+    <!--</cache>-->
+
+    <!--&lt;!&ndash; 授权缓存 &ndash;&gt;-->
+    <!--<cache name="authorizationCache"-->
+           <!--maxEntriesLocalHeap="2000"-->
+           <!--eternal="false"-->
+           <!--timeToIdleSeconds="3600"-->
+           <!--timeToLiveSeconds="0"-->
+           <!--overflowToDisk="false"-->
+           <!--statistics="true">-->
+    <!--</cache>-->
+    <!--&lt;!&ndash; 认证缓存 &ndash;&gt;-->
+    <!--<cache name="authenticationCache"-->
+           <!--maxEntriesLocalHeap="2000"-->
+           <!--eternal="false"-->
+           <!--timeToIdleSeconds="3600"-->
+           <!--timeToLiveSeconds="0"-->
+           <!--overflowToDisk="false"-->
+           <!--statistics="true">-->
+    <!--</cache>-->
+</ehcache>

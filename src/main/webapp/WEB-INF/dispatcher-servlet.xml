@@ -9,10 +9,29 @@
     <mvc:default-servlet-handler />
     <context:component-scan base-package="com.example.servlet"></context:component-scan>
     <!-- configure the customerize realm -->
-    <bean id="myShiroRealm" class="com.example.realm.MyShiroRealm"></bean>
+    <bean id="myShiroRealm" class="com.example.realm.MyShiroRealm">
+        <property name="cachingEnabled" value="true"></property>
+        <property name="authenticationCachingEnabled" value="true"></property>
+        <property name="authorizationCachingEnabled" value="true"></property>
+    </bean>
+
+    <!-- MyBatis使用ehcache缓存 start -->
+    <bean id="ehCacheManager"
+          class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache-shiro.xml" />
+        <property name="shared" value="true"></property> <!-- 这里是关键！！！没有必错  -->
+    </bean>
+    <!-- end MyBatis使用ehcache缓存 -->
+    <!-- 缓存管理器 使用Ehcache实现 -->
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManager" ref="ehCacheManager" />
+    </bean>
+
     <!-- configure the securityManager -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="myShiroRealm"></property>
+        <!--使用缓存 -->
+        <property name="cacheManager" ref="shiroCacheManager"></property>
     </bean>
     <!-- configure the filter -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -35,8 +54,6 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"></property>
     </bean>
-    <!--开启shiro注解 -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProccessor"></bean>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="order" value="1"></property>
@@ -53,5 +70,6 @@
             <value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</value>
         </property>
     </bean>
+
     <import resource="freemarker-config.xml"></import>
 </beans>

@@ -5,6 +5,8 @@ import com.example.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,6 +16,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 public class UserServlet {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping("/login")
 	public String loginUser(String username, String password) {
@@ -46,6 +50,13 @@ public class UserServlet {
 	public String deleteUser(String username) {
 		UserService.remove(username);
 		return "redirect:/user/list";
+	}
+
+	@RequestMapping("/logout")
+	public String logoutUser() {
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		return "redirect:/index.jsp";
 	}
 
 }
