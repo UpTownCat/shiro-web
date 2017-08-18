@@ -50,6 +50,7 @@ class MessageSender {
     public void sendMessage(String message) throws JMSException {
         factory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
         connection = factory.createConnection();
+        connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         destination = session.createQueue("destination");
         TextMessage textMessage = session.createTextMessage();
@@ -79,6 +80,7 @@ class MessageReciever {
     public void recieveMessage(String from) throws JMSException {
         factory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
         connection = factory.createConnection();
+        connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         destination = session.createQueue("destination");
         MessageConsumer consumer = session.createConsumer(destination);
